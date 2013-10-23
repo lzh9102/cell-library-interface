@@ -10,8 +10,13 @@ Library::~Library()
 {
 }
 
-bool Library::loadLibrary(const string& filename)
+bool Library::loadLibrary(const string& filename, const set<string>& cells)
 {
+	// example: whether information of a cell should be saved
+	bool and3_used = cells.find("and3") != cells.end();
+	if (and3_used) {
+		// save and3 information
+	}
 	return false;
 }
 

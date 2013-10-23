@@ -2,6 +2,7 @@
 #define _LIBRARY_H_
 
 #include <string>
+#include <set>
 
 class Library
 {
@@ -10,12 +11,14 @@ public:
 	virtual ~Library();
 
 	/**
-	 * Load cell library from a file
+	 * Load cell library from a file.
+	 * Call setCellList() to set the cells before calling this function
 	 *
 	 * @param filename file name of the cell library
 	 * @return true if success, false if failed
 	 */
-	bool loadLibrary(const std::string& filename);
+	bool loadLibrary(const std::string& filename,
+			const std::set<std::string>& cells);
 
 	/**
 	 * Determine whether the library contains the gate
