@@ -267,10 +267,20 @@ bool Library::pinExists(const string& gate, const string& pin) const
 	return false;
 }
 
-string Library::getFunction(const string& gate,
-			const string& pin) const
+bool Library::getFunction(const string& gate,
+			const string& pin, std::string& function) const
 {
-	return "";
+    if (nameToCell.find(gate)==nameToCell.end()) {
+        return false;
+    }
+    CELL* cell=nameToCell.find(gate)->second;
+    for (unsigned i=0; i<cell->pinList.size(); i++) {
+        if (cell->pinList[i]->name.compare(pin)==0) {
+            function=cell->pinList[i]->function;
+            return true;
+        }
+    }
+	return false;
 }
 
 double Library::computeRiseTrans(const string& gate,

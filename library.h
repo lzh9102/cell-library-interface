@@ -103,10 +103,11 @@ public:
 	 *
 	 * @param gate name of the gate to lookup
 	 * @param pin name of the pin
-	 * @return string representation of the function. empty if the gate
+     * @param function function of the pin (call by reference as returning type)
+	 * @return true if the gate exists. false otherwise
 	 */
-	std::string getFunction(const std::string& gate,
-			const std::string& pin) const;
+	bool getFunction(const std::string& gate,
+			const std::string& pin, std::string& function) const;
 
 	/**
 	 * Compute the output transition time (rising)
