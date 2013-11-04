@@ -3,9 +3,69 @@
 
 #include <string>
 #include <set>
+#include <vector>
+#include <map>
 
 class Library
 {
+private:
+    struct TABLE{
+        unsigned no_Index1;
+        unsigned no_Index2;
+        double *index1Array;
+        double *index2Array;
+        double *dataTable;      //size==no_Index1*no_Index2
+        
+        TABLE():no_Index1(0),no_Index2(0),index1Array(NULL),index2Array(NULL),dataTable(NULL){}
+        ~TABLE(){
+            delete [] index1Array;
+            delete [] index2Array;
+            delete [] dataTable;
+        }
+    };
+    struct PIN{
+        std::string name;
+        std::string function;
+        double capacitance;
+        double maxTransition;
+        double maxCapacitance;
+        std::vector<TABLE*> FallTimingTable;
+        std::vector<TABLE*> RiseTimingTable;
+        std::vector<TABLE*> FallTransitionTable;
+        std::vector<TABLE*> RiseTransitionTable;
+        
+        PIN(std::string n):name(n),function(""),capacitance(0),maxTransition(0),maxCapacitance(0){}
+        ~PIN(){
+            for(unsigned i=0;i<FallTimingTable.size();i++) {
+                delete FallTimingTable[i];
+                FallTimingTable[i]=NULL;
+            }
+            for(unsigned i=0;i<RiseTimingTable.size();i++) {
+                delete RiseTimingTable[i];
+                RiseTimingTable[i]=NULL;
+            }
+            for(unsigned i=0;i<FallTransitionTable.size();i++) {
+                delete FallTransitionTable[i];
+                FallTransitionTable[i]=NULL;
+            }
+            for(unsigned i=0;i<RiseTransitionTable.size();i++) {
+                delete RiseTransitionTable[i];
+                RiseTransitionTable[i]=NULL;
+            }
+        }
+    };
+    struct CELL{
+        std::string name;
+        std::vector<PIN*> pinList;
+        
+        CELL(std::string n):name(n){}
+        ~CELL(){
+            for(unsigned i=0;i<pinList.size();i++) {
+                delete pinList[i];
+                pinList[i]=NULL;
+            }
+        }
+    };
 public:
 	Library();
 	virtual ~Library();
@@ -97,6 +157,8 @@ public:
 	double computeFallDelay(const std::string& gate,
 			const std::string& pin, double itrans, double ocap) const;
 private:
+    std::map<std::string,CELL*> nameToCell;
+    
 };
 
 #endif /* _LIBRARY_H_ */
