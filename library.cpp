@@ -242,7 +242,7 @@ bool Library::loadLibrary(const string& filename, const set<string>& cells)
         }
     }
     infile.close();
-	return false;
+	return true;
 }
 
 bool Library::gateExists(const string& gate) const
