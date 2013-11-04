@@ -157,9 +157,19 @@ public:
 	 */
 	double computeFallDelay(const std::string& gate,
 			const std::string& pin, double itrans, double ocap) const;
+    
+    /**
+     * Compute the value suit the parameter
+     *
+     * @param tableList table list to compute max value
+     * @param index1 the former parameter of 2d table
+	 * @param index2 the latter parameter of 2d table
+     * @return the max value
+     */
+    double computeTable(std::vector<TABLE*> &tableList, double index1, double index2) const;
 private:
     std::map<std::string,CELL*> nameToCell;
-    
+    bool pinExists(const std::string& gate, const std::string& pin, PIN* &ptr) const;
 };
 
 #endif /* _LIBRARY_H_ */

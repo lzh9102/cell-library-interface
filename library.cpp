@@ -267,6 +267,23 @@ bool Library::pinExists(const string& gate, const string& pin) const
 	return false;
 }
 
+bool Library::pinExists(const string& gate, const string& pin, PIN* &ptr) const
+{
+    if (nameToCell.find(gate)==nameToCell.end()) {
+        ptr=NULL;
+        return false;
+    }
+    CELL* cell=nameToCell.find(gate)->second;
+    for (unsigned i=0; i<cell->pinList.size(); i++) {
+        if (cell->pinList[i]->name.compare(pin)==0) {
+            ptr=cell->pinList[i];
+            return true;
+        }
+    }
+    ptr=NULL;
+	return false;
+}
+
 bool Library::getFunction(const string& gate,
 			const string& pin, std::string& function) const
 {
@@ -283,26 +300,47 @@ bool Library::getFunction(const string& gate,
 	return false;
 }
 
+double Library::computeTable(vector<TABLE*> &tableList, double index1, double index2) const {
+    
+    return 0;
+}
+
 double Library::computeRiseTrans(const string& gate,
 			const string& pin, double itrans, double ocap) const
 {
+    PIN* ptr;
+    if (pinExists(gate, pin, ptr)) {
+        return computeTable(ptr->RiseTransitionTable, itrans, ocap);
+    }
 	return 0;
 }
 
 double Library::computeFallTrans(const string& gate,
 			const string& pin, double itrans, double ocap) const
 {
+    PIN* ptr;
+    if (pinExists(gate, pin, ptr)) {
+        return computeTable(ptr->FallTransitionTable, itrans, ocap);
+    }
 	return 0;
 }
 
 double Library::computeRiseDelay(const string& gate,
 			const string& pin, double itrans, double ocap) const
 {
+    PIN* ptr;
+    if (pinExists(gate, pin, ptr)) {
+        return computeTable(ptr->RiseTimingTable, itrans, ocap);
+    }
 	return 0;
 }
 
 double Library::computeFallDelay(const string& gate,
 			const string& pin, double itrans, double ocap) const
 {
+    PIN* ptr;
+    if (pinExists(gate, pin, ptr)) {
+        return computeTable(ptr->FallTimingTable, itrans, ocap);
+    }
 	return 0;
 }
