@@ -1,6 +1,6 @@
 #include <set>
 #include "library.h"
-
+#include <iostream>
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -16,5 +16,7 @@ int main(int argc, char *argv[])
 	Library library;
 	library.loadLibrary("l90sprvt_typ.lib", cells);
 
+    cout<<library.computeRiseTrans("INVM0N", "Z", 0.45, 0.02)<<endl;
+    
 	return 0;
 }
