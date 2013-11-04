@@ -301,8 +301,25 @@ bool Library::getFunction(const string& gate,
 }
 
 double Library::computeTable(vector<TABLE*> &tableList, double index1, double index2) const {
-    
-    return 0;
+    unsigned idx1,idx2;
+    double max_value=0;
+    for (unsigned i=0; i<tableList.size(); i++) {
+        //compute tableList[i]
+        for (idx1=1; idx1<tableList[i]->no_Index1; idx1++) {
+            if (tableList[i]->index1Array[idx1]>=index1) {
+                break;
+            }
+        }
+        for (idx2=1; idx2<tableList[i]->no_Index2; idx2++) {
+            if (tableList[i]->index2Array[idx2]>=index2) {
+                break;
+            }
+        }
+        if (tableList[i]->dataTable[idx1*tableList[i]->no_Index2+idx2]>max_value) {
+            max_value=tableList[i]->dataTable[idx1*tableList[i]->no_Index2+idx2];
+        }
+    }
+    return max_value;
 }
 
 double Library::computeRiseTrans(const string& gate,
