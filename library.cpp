@@ -247,11 +247,23 @@ bool Library::loadLibrary(const string& filename, const set<string>& cells)
 
 bool Library::gateExists(const string& gate) const
 {
-	return false;
+    if (nameToCell.find(gate)==nameToCell.end()) {
+        return false;
+    }
+	return true;
 }
 
 bool Library::pinExists(const string& gate, const string& pin) const
 {
+    if (nameToCell.find(gate)==nameToCell.end()) {
+        return false;
+    }
+    CELL* cell=nameToCell.find(gate)->second;
+    for (unsigned i=0; i<cell->pinList.size(); i++) {
+        if (cell->pinList[i]->name.compare(pin)==0) {
+            return true;
+        }
+    }
 	return false;
 }
 
