@@ -60,8 +60,12 @@ void GetNextLine(fstream &infile,string &next_line,unsigned &BracesLevel) {
 }
 
 void ExtractNumbersFromString(string str,unsigned &length,double* &array) {
-    if (str[0]=='"') {str=str.substr(1);}
-    if (str[str.size()-1]=='"') {str=str.substr(0,str.size()-1);}
+    
+    for (unsigned i=0; i<str.size(); i++) {
+        if (str[i]=='"') {
+            str.erase(str.begin()+i);
+        }
+    }
     
     str+=',';
     for (unsigned i=0; i<str.size(); i++) {
