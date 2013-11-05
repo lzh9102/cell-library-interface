@@ -319,8 +319,8 @@ double Library::computeTable(vector<TABLE*> &tableList, double index1, double in
                 break;
             }
         }
-        if (tableList[i]->dataTable[idx1*tableList[i]->no_Index2+idx2]>max_value) {
-            max_value=tableList[i]->dataTable[idx1*tableList[i]->no_Index2+idx2];
+        if (tableList[i]->dataTable[idx2*tableList[i]->no_Index1+idx1]>max_value) {
+            max_value=tableList[i]->dataTable[idx2*tableList[i]->no_Index1+idx1];
         }
     }
     return max_value;
